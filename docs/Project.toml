@@ -1,0 +1,6 @@
+[deps]
+Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+Werks = "3b934d53-d38b-48ca-9b97-a867c8690dc1"
+
+[compat]
+Documenter = "1.2" 
