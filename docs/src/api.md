@@ -20,8 +20,6 @@ tail
 
 ```@docs
 dms_to_decimal
-count_coords
-intersect_multipolygons
 ```
 
 ## Visualization
@@ -35,11 +33,4 @@ create_bullseye_map
 
 ```@docs
 get_package_uuids
-```
-
-## Miscellaneous Utilities
-
-```@docs
-convert_to_integer!
-gini
 ``` 

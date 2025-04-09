@@ -410,12 +410,12 @@ end
 """
     dms_to_decimal(coords::AbstractString) -> AbstractString
 
-Convert latitude and longitude coordinates from degrees, minutes, seconds (DMS) format 
-to decimal degrees (DD) format as a string.
+Convert coordinates to decimal degrees format as a string.
 
 # Arguments
-- `coords`: A string representing the latitude and longitude coordinates in the format 
-  "41° 15′ 31″ N, 95° 56′ 15″ W".
+- `coords`: A string representing the coordinates. Can be in one of two formats:
+  - DMS format: "41° 15′ 31″ N, 95° 56′ 15″ W"
+  - Decimal format: "52.189902,-1.607106"
 
 # Returns
 - A string containing the latitude and longitude coordinates in decimal degrees format,
@@ -423,13 +423,32 @@ to decimal degrees (DD) format as a string.
 
 # Example
 ```julia
-coord  = "52.189902,-1.607106"
-result = dms_to_decimal(coords)
-println(result)  # Output: "41.258611111111111, -95.9375"
+# DMS input
+coord1 = "41° 15′ 31″ N, 95° 56′ 15″ W"
+result1 = dms_to_decimal(coord1)
+# Output: "41.258611111111111, -95.9375"
+
+# Decimal input - returns as is with normalized formatting
+coord2 = "52.189902,-1.607106"
+result2 = dms_to_decimal(coord2)
+# Output: "52.189902, -1.607106"
+```
 """
 function dms_to_decimal(coord::AbstractString)
+    # Check if the input is already in decimal format
+    if occursin(r"^-?\d+\.\d+,-?\d+\.\d+$", replace(coord, " " => ""))
+        # Already in decimal format, just split and normalize formatting
+        parts = split(coord, ",")
+        lat = parse(Float64, strip(parts[1]))
+        lon = parse(Float64, strip(parts[2]))
+        return "$(lat), $(lon)"
+    end
+    
+    # Otherwise, handle DMS format
     # Split the input string into latitude and longitude parts
-    lat_dms, lon_dms = split(coord, ",")
+    parts = split(coord, ",")
+    lat_dms = strip(parts[1])
+    lon_dms = strip(parts[2])
     
     # Helper function to convert DMS to decimal
     function to_decimal(dms::AbstractString)
@@ -437,7 +456,12 @@ function dms_to_decimal(coord::AbstractString)
         dms = strip(dms)
         
         # Extract the degree, minute, and second values
-        deg, min, sec, dir = match(r"(\d+).\s*(\d+)′\s*(\d+(?:\.\d+)?)″\s*([NSEW])", dms).captures
+        match_result = match(r"(\d+)°\s*(\d+)′\s*(\d+(?:\.\d+)?)″\s*([NSEW])", dms)
+        if match_result === nothing
+            throw(ArgumentError("Invalid DMS format: $dms"))
+        end
+        
+        deg, min, sec, dir = match_result.captures
         
         # Convert the values to floats
         deg = parse(Float64, deg)

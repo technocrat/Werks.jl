@@ -1,6 +1,19 @@
 [deps]
+ArchGDAL = "c9ce4bd3-c3d5-55b8-8973-c0e20141b8c3"
+CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
+DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+GDAL = "add2ef01-049f-52c4-9ee2-e494f65e021a"
+GeoInterface = "cf35fbd7-0cd7-5166-be24-54bfbe79505f"
+GeoJSON = "61d90e0f-e114-555e-ac52-39dfb47a3ef9"
+GeometryBasics = "5c1252a2-5f33-56bf-86c9-59e7332b4326"
+JSON3 = "0f8b85d8-7281-11e9-16c2-39a750bddbf1"
+Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
+Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
+Polynomials = "f27b6e38-b328-58d1-80ce-0feddd5e7a45"
+Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
 Werks = "3b934d53-d38b-48ca-9b97-a867c8690dc1"
 
 [compat]
-Documenter = "1.2" 
+Documenter = "1.2"
